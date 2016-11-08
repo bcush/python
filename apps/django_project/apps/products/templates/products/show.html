@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  {% load static %}
+   <link rel="stylesheet" href="{% static 'products/style.css' %}"media="screen" title="no title"  charset="utf-8">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+   <script type="text/javascript" src="{% static 'products/script.js' %}"></script>
+    <title>Product Show</title>
+</head>
+<body>
+
+      <div id="wrapper">
+        <div class="navbar">
+          <h1>Shopping Cart</h1>
+        </div>
+        <div class="mainContent">
+<!--Left and right content inside of main div -->
+          <div class="leftside">
+            <div id="mainProductPic">
+              <a href="">Go Back</a>
+              <h1>Black Belt for Staff<!--{{product.name}}--></h1>
+              <img id="sub_Pic" src="http://placehold.it/350x350">
+            </div>
+            <div id="thumbnails">
+              <button><img id="sub_pic1" src="http://placehold.it/80x80"></button>
+              <button><img id="sub_pic2" src="http://placehold.it/80x80"></button>
+              <button><img id="sub_pic3" src="http://placehold.it/80x80"></button>
+              <button><img id="sub_pic4" src="http://placehold.it/80x80"></button>
+            </div>
+          </div>
+          <div id="rightSide">
+<!--Product description and buy Button -->
+            <div class="productDescription">
+              <p><!--{{product.desctiption}}-->Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit
+                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.</p>
+                <form id="buyProduct">
+                  <select>
+                    <option value="one">1($99.99)</option>
+                    <option value="two">2($199.98)</option>
+                  </select>
+                  <button id="success_button">Buy</button>
+                </form>
+                <div class="alert-box success">Your cart has been updated!</div>
+              </div>
+          </div>
+<!--Similar items div.. pythonic code needs to be adjusted to get the right images -->
+          <div class="similarItems">
+            <h1>Similar Items</h1>
+        <!--<table>
+            {% for product in products %}
+              <tr><td><img src=
+                  {{ image.image}}
+                {% endfor %}
+            </table> -->
+
+            <img src="http://placehold.it/100x100">
+            <img src="http://placehold.it/100x100">
+            <img src="http://placehold.it/100x100">
+            <img src="http://placehold.it/100x100">
+            <img src="http://placehold.it/100x100">
+            <img src="http://placehold.it/100x100">
+          </div>
+        </div>
+      </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html>
+<head>
+	<title>Home</title>
+		<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+		<nav class="navbar navbar-default">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Admin</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="">Home <span class="sr-only">(current)</span></a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	      	{% if user.is_authenticated %}
+	        <li><a href="{% url 'logout' %}">Log Out</a></li>
+	        <li><a href="{% url 'my_admin/products' %}">Products</a></li>
+	        {% else %}
+	        <li><a href="">Sign In</a></li>
+	        {% endif %}
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container">
+		<select onchange="window.location.href=this.value;">
+			<option>Status</option>
+			<option value="/my_admin/orders/id">All</option>		
+			<option value="/my_admin/orders/Received">Received</option>
+			<option value="/my_admin/orders/Processed">Processed</option>
+			<option value="/my_admin/orders/Shipped">Shipped</option>
+		</select>
+		<table class="table table-striped table-bordered">
+			<tr>
+				<th>Order Id</th>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Billing Address</th>
+				<th>Total</th>
+				<th>Status</th>
+			</tr>
+			{% for order in orders %}
+				<tr>
+					<td><a href="/my_admin/orders/show/{{order.id}}">{{order.id}}</a></td>
+					<td>{{order.user}}</td>
+					<td>{{order.created_at}}</td>
+					{% for i in address %}
+						{% if i.user == order.user %}
+					<td>{{i.address}} {{i.city}} {{i.state}} {{i.zip}} </td>
+						{%endif%}
+					{% endfor %}
+					<td>{{order.total}}</td>
+					<td>
+						<select onchange="window.location.href=this.value;">
+							<option>{{order.status}}</option>
+							{% if order.status == 'Received' %}
+								<option value="/order/update/{{order.id}}/Processed">Processed</option>
+								<option value="/order/update/{{order.id}}/Shipped">Shipped</option>
+							{% endif %}
+							{% if order.status == 'Processed' %}
+								<option value="/order/update/{{order.id}}/Received">Received</option>
+								<option value="/order/update/{{order.id}}/Shipped">Shipped</option>
+							{%endif%}
+							{% if order.status == 'Shipped' %}
+								<option value="/order/update/{{order.id}}/Received">Received</option>
+								<option value="/order/update/{{order.id}}/Processed">Processed</option>
+							{%endif%}
+						</select>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</body>
+
+<html>

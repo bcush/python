@@ -1,0 +1,325 @@
+        <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>New Jerseys</title>
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "products/css/font-awesome.css" %}" charset="utf-8">
+    <link rel="stylesheet" href="{% static "products/css/paymentfont.min.css" %}" charset="utf-8">
+    <link rel="stylesheet" href="{% static "products/css/style.css" %}" charset="utf-8">
+  </head>
+  <body>
+
+    <!-- Navbar -->
+     <div class="container">
+      <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+        <div class="nav navbar-nav">
+     <!--      <a class="navbar-brand" href="#"><img class="navbar-brand" src="img/logo.png">New Jerseys</a> -->
+          {% load static %}
+          <a class="navbar-brand" href="{% url 'home' %}"><img class="navbar-brand" src="{% static "products/img/logo.png" %}">New Jerseys</a>
+          <span class="nav-item dropdown">
+          <a class="nav-item nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Browse</a>
+            <div class="dropdown-menu text-xs-center">
+              <a class="dropdown-item" href="/products/category/1">MLB</a>
+              <a class="dropdown-item" href="/products/category/2">NBA</a>
+              <a class="dropdown-item" href="/products/category/3">NFL</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'products' %}">Browse All</a>
+            </div>
+          </span>
+          <span class="nav-item dropdown">
+          <a class="nav-item nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search" aria-hidden="true"></i></a>
+          <div class="dropdown-menu">
+            <form class="form-inline dropdown-item">
+              <input class="form-control-sm" type="text" placeholder="Search">
+              <button class="btn-sm" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
+          </div>
+          </span>
+          <!-- <a class="nav-item nav-link pull-xs-right" href="/checkout">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a> -->
+          <!-- <a class="nav-item nav-link pull-xs-right" href="#" data-toggle="modal" data-target="#login">Login / Register <i class="fa fa-user-plus" aria-hidden="true"></i></a> -->
+
+          {% if user.is_authenticated %}
+          <li><a class="nav-item nav-link pull-xs-right" href="{% url 'logout' %}">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a> 
+          {% else %}
+          <a class="nav-item nav-link pull-xs-right" href="#" data-toggle="modal" data-target="#login">Login / Register <i class="fa fa-user-plus" aria-hidden="true"></i></a>
+         <!--  <li><a class="nav-item nav-link pull-xs-right" href="{% url 'login' %}">Sign In <i class="fa fa-sign-out" aria-hidden="true"></i></a>  -->
+          {% endif %}          
+<!--           <a class="nav-item nav-link pull-xs-right" href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a> -->
+        </div>
+      </nav>
+    </div>
+
+    <!-- content -->
+    <div class="container bump2">
+      <h1 class="display-4 text-xs-center">Your shopping cart</h1>
+      <table class="table text-xs-center">
+      {% block body %}
+        <thead>
+          <tr class="table-info text-xs-center">
+            <th></th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+          <tr>
+            <th scope="row"><img class="img-fluid cartimg" src="{{ item.image.url }}"></th>
+            <td>{{ item.product.name }}</td>
+            <td>${{ item.total_price }}</td>
+            <td>
+              <p>
+               {{ item.quantity }} 
+              </p>
+              <p><a href="#">Delete item</a></p></td>
+            <td>${{ item.total_price }}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+          </table>
+          {% endblock %}
+<!-- 
+
+          <tr>
+            <th scope="row"><img class="img-fluid cartimg" src="img/_bryant.jpg"></th>
+            <td>Kobe Bryant Jersey</td>
+            <td>$69.99</td>
+            <td>
+              <p><select class="custom-select">
+                <option selected value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select></p>
+              <p><a href="#">Delete item</a></p></td>
+            <td>$69.99</td>
+          </tr>
+          <tr>
+            <th scope="row"><img class="img-fluid cartimg" src="img/_jeter.jpg"></th>
+            <td>Derek Jeter Jersey</td>
+            <td>$69.99</td>
+            <td>
+              <p><select class="custom-select">
+                <option selected value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select></p>
+              <p><a href="#">Delete item</a></p></td>
+            <td>$69.99</td>
+          </tr>
+          <tr class="table-info">
+            <th scope="row"></th>
+            <td></td>
+            <td>Order Total:</td>
+            <td>4 items</td>
+            <td>$279.96</td>
+          </tr>
+        </tbody>
+      </table> -->
+
+
+    </div>
+    <div class="container">
+      <div class="col-xs-8 offset-xs-2">
+        <!-- <p class="lead text-xs-center">Don't want to wait for your new gear?  Every order receives FREE 2-day shipping!</p> -->
+        <div class="form-check text-xs-center">
+<!--           <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" checked>
+ -->            <p class="lead">Where should we ship your sweet New Jerseys?</p>
+<!--           </label>
+ -->        </div>
+        <div class="form-group">
+<!--           <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-tag" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="First Name" name="firstname">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-tag" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="Last Name" name="lastname">
+          </div>
+ -->          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="Address" name="address">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="Address 2" name="address2">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="City" name="name">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="State" name="name">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+            <input class="form-control" type="text" placeholder="ZIP Code" name="name">
+          </div>
+        </div>
+        <!-- <p class="text-xs-center"><a href="#">Update Shipping Address</a></p> -->
+      </form>
+
+      <form class="text-xs-center" action="/summary" method="POST">
+      {% csrf_token %}
+        <script
+          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_CHBUNkBRz6Vrp5ZLfsImY0FS"
+          data-amount="60845"
+          data-name="New Jersey, New You"
+          data-description=""
+          data-image=""
+          data-locale="auto"
+          data-bitcoin="true">
+        </script>
+        <p></p>
+        <p><i class="pf pf-stripe"></i> <i class="pf pf-visa"></i> <i class="pf pf-mastercard"></i> <i class="pf pf-american-express"></i> <i class="pf pf-jcb"></i> <i class="pf pf-discover"></i> <i class="pf pf-diners"></i> <i class="pf pf-bitcoin"></i></p>
+      </form>
+      </div>
+    </div>
+
+    </div>
+    </div>
+
+
+
+
+    <!-- footer -->
+    <nav class="navbar navbar-static-bottom navbar-dark text-xs-center">
+      <span class="text-muted">© 2016 New Jersey, New You, Inc.</span>
+      <span class="text-muted">Made with <i class="fa fa-heart" aria-hidden="true"></i> in Burbank.</span>
+    </nav>
+
+    <!-- modal login -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <form role="form" class="form-control-sm" action="/login" method="POST">
+                {% csrf_token %}
+                <legend><i class="fa fa-user" aria-hidden="true"></i> Login</legend>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-envelope-o" aria-hidden="true"></i></span>
+                      <!-- <input class="form-control" type="text" placeholder="Email" name="email"> -->
+                      <input class="form-control" type="text" placeholder="Username" name="username">
+
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-key" aria-hidden="true"></i></span>
+                      <input class="form-control" type="password" placeholder="Password" name="password"></p>
+                    </div>
+                  </div>
+                  <button class="btn btn-info" type="submit">Login</button>
+                </form>
+              <form role="form" class="form-control-sm" action="/register" method="POST">
+               {% csrf_token %}
+                <legend><i class="fa fa-user-plus" aria-hidden="true"></i> Register</legend>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-tag" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="Username" name="username">
+<!--                     <input class="form-control" type="text" placeholder="First Name" name="firstname"> -->
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-tag" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="First Name" name="first_name">
+<!--                     <input class="form-control" type="text" placeholder="First Name" name="firstname"> -->
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-tag" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="Last Name" name="last_name">
+<!--                     <input class="form-control" type="text" placeholder="Last Name" name="lastname"> -->
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-envelope-o" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="Email" name="email">
+<!--                     <input class="form-control" type="text" placeholder="Email" name="email"> -->
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-key" aria-hidden="true"></i></span>
+                    <input class="form-control" type="password" placeholder="Password" name="password">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-key" aria-hidden="true"></i></span>
+                    <input class="form-control" type="password" placeholder="Confirm Password" name="password_conf">
+<!--                     <input class="form-control" type="password" placeholder="Confirm Password" name="passconf"> -->
+                  </div>
+                </div>
+<!--                 <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="Address" name="address">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="Address 2 (optional)" name="address2">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="City" name="name">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="State" name="name">
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-map-o" aria-hidden="true"></i></span>
+                    <input class="form-control" type="text" placeholder="ZIP Code" name="name">
+                  </div>
+                </div> -->
+                <button class="btn btn-info" type="submit">Register</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- modal cart -->
+    <div class="modal fade" id="cart" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Shopping Cart</h4>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="media">
+                <a class="media-left media-middle" href="#">
+                  <img class="media-object" src="img/wilson.jpg" alt="Seahawks"></a>
+                <div class="media-body">
+                  <h4 class="media-heading">Seahawks Jersey</h4>
+                  <p>$69.99</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery, Tether, Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+  </body>
+</html>
