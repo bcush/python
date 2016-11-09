@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login/Registration</title>
+</head>
+<body>
+	<h1>Welcome!</h1>
+	<form action='/register' method='POST'>
+	{% csrf_token %}
+	<fieldset>
+		<legend>Register</legend>
+		<label>Name
+		<input type='text' name='name'></label>
+		<label>Alias
+		<input type='text' name='alias'></label>
+		<label>Email
+		<input type='text' name='email'></label>
+		<label>Password
+		<input type='text' name='password'></label>
+		<h4>* Password should be at least 8 characters</h4>
+		<label>Confirm PW:
+		<input type='text' name='passconf'></label>
+		<label>Date of Birth:
+		<input type='date' name='dob'></label>
+		<input type='submit' value='Register'>
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</fieldset>
+	</form>
+
+	<form action='/login' method='POST'>
+	{% csrf_token %}
+	<fieldset>
+		<legend>Login</legend>
+		<label>Email
+		<input type='text' name='email'></label>
+		<label>Password
+		<input type='text' name='password'></label>
+		<input type='submit' value='Login'>
+	</fieldset>
+	</form>
+
+</body>
+</html>

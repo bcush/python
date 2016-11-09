@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather</title>
+  <script src="https://code.jquery.com/jquery-3.1.0.slim.min.js" integrity="sha256-cRpWjoSOw5KcyIOaZNo4i6fZ9tKPhYYb6i5T9RSVJG8=" crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    var apiKey = "994bdef4604d2ce6eae94bb3035d2133";
+
+    $(document).ready(function() {
+      $('#location_button').click(function() {
+        var location = $('#location_id').val().toLowerCase();
+          $('#location_id').val("");
+            $('#weather').html("<h1>" + location + "</h1>");
+              var location_id_api;
+                if (location == "los angeles") {
+                  location_id_api = "5368361";
+                  console.log(location_id_api);
+                }
+                if (location == "boston") {
+                  location_id_api = "4930956";
+                }
+                
+                // your code here (build up your url)
+                var url = ("http://api.openweathermap.org/data/2.5/forecast/city?id=" +
+                  location_id_api + "&APPID=" + apiKey + "");
+
+                  $.get(url, function(res) {
+                    console.log(res);
+                  }, 'json');
+
+        // dont forget to return false so the page doens't refresh
+      });
+    });
+  </script>
+</head>
+
+<body>
+    <input type="text" name="location_form" id="location_id">
+    <button id="location_button">Search Weather</button>
+
+  <div id="weather">
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+#sidewrapper {
+/*	border: 1px;
+	border-color: black;
+	border-style: solid;*/
+	height: 150px;
+	width: 250px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.wrapper {
+/*	border: 1px;
+	border-color: black;
+	border-style: solid;*/
+	display: inline-block;
+	width: 800px;
+	height: 580px;
+}
+
+.product {
+/*	border: 1px;
+	border-color: red;
+	border-style: solid;*/
+	display: inline-block;
+	height: 275px;
+	margin: 5px;
+	width: 250px;
+}
+
+.details {
+/*	border: 1px;
+	border-color: pink;
+	border-style: solid;*/
+}
+
+.price {
+/*	border: 1px;
+	border-style: solid;
+	border-color: green;*/
+}

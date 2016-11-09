@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load static %}
+	<title>Pagination</title>
+	<link rel="stylesheet" type="text/css" href='{% static "pagination_app/pagination_app.css" %}'>
+</head>
+<body>
+
+<div id="sidewrapper">
+	<form action='' method='POST'>
+		<input type='text' placeholder='Product Name'>
+		<input type='submit'>
+	</form>
+	<h2>Categories</h2>
+	{% for category in categories %}
+		{{ category.name }}
+	{% endfor %}
+</div>
+
+<div class="wrapper">
+	<div id="header">
+		<h1>Insert Category Here (insert page here)</h1>
+	{% for product in products %}
+	<div class="product">
+	    {# Each "product" is a Product model object. #}
+	    <img src='http://lorempixel.com/150/150'>
+	    <div class="details">
+	    {{ product.name|title }}<br>
+	    {{ product.description|title}}<br>
+	    {{ product.category.name|title }}<br>
+	    </div>
+	    <div class="price">
+	    <p>${{ product.price }}</p>
+	    </div>
+	</div>
+	{% endfor %}
+</div>
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page={{ products.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+        </span>
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% for page in objects.paginator.page_range %}
+    {% if forloop.counter != 1 %} | {% endif %}
+    {{ page }}
+{% endfor %}
+
+<!-- 	<form action='/category' method='POST'>
+	{% csrf_token %}
+		<fieldset>
+		<legend>Category</legend>
+	<label>Name
+		<input type='text' name='name'></label>
+		<input type='submit'>
+		</fieldset>
+	</form>
+	
+
+	<br>
+
+	<form action='/product' method='POST'>
+	{% csrf_token %}
+		<fieldset>
+			<legend>Product</legend>
+			<label>Name
+				<input type='text' name='name'></label>
+			<label>Description
+				<input type='text' name='description'></label>
+			<label>Category
+				<input type='text' name='category'></label>
+				<input type='submit'>
+		</fieldset>
+	</form>
+
+	{% for cat in cats %}
+		<p> Category ID: {{ cat.id }} </p>
+		<p> Category Name: {{ cat.name }} </p>
+		<hr>
+	{% endfor %}
+
+	{% for prod in prods %}
+		<p> Product ID: {{ prod.id }} </p>
+		<p> Product Name: {{ prod.name }} </p>
+		<p> Product Desc: {{ prod.description }} </p>
+		<p> Product Category: {{ prod.category }} </p>
+		<hr>
+	{% endfor %} -->
+</body>
+</html>
